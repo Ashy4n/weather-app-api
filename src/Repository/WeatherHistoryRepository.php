@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\WeatherHistory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,30 +40,22 @@ class WeatherHistoryRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllQuery() : QueryBuilder
+    {
+        return $this->createQueryBuilder('w');
+    }
 
+    public function getMostQueriedCity() : String
+    {
+        $result = $this->createQueryBuilder('w')
+            ->select('w.city' )
+            ->groupBy('w.city')
+            ->orderBy('COUNT(w.city)' , 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
 
-//    /**
-//     * @return WeatherHistory[] Returns an array of WeatherHistory objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('w')
-//            ->andWhere('w.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('w.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        return $result[0]['city'];
+    }
 
-//    public function findOneBySomeField($value): ?WeatherHistory
-//    {
-//        return $this->createQueryBuilder('w')
-//            ->andWhere('w.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

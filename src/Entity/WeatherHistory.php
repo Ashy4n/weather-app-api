@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\WeatherHistoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,7 +36,7 @@ class WeatherHistory
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?weather $weather = null;
+    private ?Weather $weather = null;
 
     public function getId(): ?int
     {

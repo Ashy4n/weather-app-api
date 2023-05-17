@@ -39,31 +39,27 @@ class WeatherRepository extends ServiceEntityRepository
         }
     }
 
+    public function getNumberOfQueries() : int
+    {
+        $result = $this->createQueryBuilder('w')
+            ->select('COUNT(w) as allQ' )
+            ->getQuery()
+            ->getResult();
+        return $result[0]['allQ'];
+    }
 
-//    /**
-//     * @return Weather[] Returns an array of Weather objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('w')
-//            ->andWhere('w.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('w.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getTemperatureData() : Array
+    {
+        $result = $this->createQueryBuilder('w')
+            ->select(
+                'AVG(w.temperatureValue) as AVG',
+                'MIN(w.temperatureValue) as MIN',
+                'MAX(w.temperatureValue) as MAX'
+            )
+            ->getQuery()
+            ->getResult();
 
+        return $result[0];
+    }
 
-
-//    public function findOneBySomeField($value): ?Weather
-//    {
-//        return $this->createQueryBuilder('w')
-//            ->andWhere('w.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
