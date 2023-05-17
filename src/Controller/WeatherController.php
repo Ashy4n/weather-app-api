@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\WeatherHistoryRepository;
-use App\Service\WeatherProvider;
+use App\Service\WeatherService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +13,21 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class WeatherController extends AbstractController
 {
-    #[Route('/getWeather', name: "getWeather", methods: ['GET'])]
-    public function getWeather(Request $request, WeatherProvider $weatherProvider): Response
+    public function __construct(private WeatherService $service)
     {
-        dd($weatherProvider->getWeather(10, 10));
-        return $this->json($content);
+    }
+
+    #[Route('/getWeather', name: "getWeather", methods: ['GET'])]
+    public function getWeather(Request $request): Response
+    {
+        $lat = $request->query->get('lat');
+        $lng = $request->query->get('lng');
+        if($lat < -90 || $lat > 90 || $lng < -180 || $lng >180)return $this->json(null,Response::HTTP_BAD_REQUEST);
+        if($lat == null || $lng == null) return $this->json(null,Response::HTTP_BAD_REQUEST);
+
+
+        $response = $this->service->getWeatherByCoordinates($lat,$lng);
+        return $this->json($response);
     }
 
     public function getHistory(): Response

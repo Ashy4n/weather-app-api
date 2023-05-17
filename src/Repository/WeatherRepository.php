@@ -39,6 +39,7 @@ class WeatherRepository extends ServiceEntityRepository
         }
     }
 
+
 //    /**
 //     * @return Weather[] Returns an array of Weather objects
 //     */
@@ -53,6 +54,8 @@ class WeatherRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
+
+
 
 //    public function findOneBySomeField($value): ?Weather
 //    {

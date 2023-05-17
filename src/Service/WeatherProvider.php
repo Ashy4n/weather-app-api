@@ -15,15 +15,16 @@ class WeatherProvider
     {
     }
 
-    public function getWeather(float $lat,float $lng)
+    public function getWeather(float $lat,float $lng): Object
     {
         $apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?lat={$lat}&lon={$lng}&appid={$this->weatherApiKey}";
         $response = $this->client->request(
             'GET',
             $apiEndpoint
         );
-        $content = $response->toArray();
 
-        return $content;
+        $content = $response->getContent();
+
+        return json_decode($content);
     }
 }

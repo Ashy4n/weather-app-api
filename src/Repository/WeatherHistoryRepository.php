@@ -39,6 +39,8 @@ class WeatherHistoryRepository extends ServiceEntityRepository
         }
     }
 
+
+
 //    /**
 //     * @return WeatherHistory[] Returns an array of WeatherHistory objects
 //     */

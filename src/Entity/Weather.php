@@ -31,6 +31,11 @@ class Weather
     #[ORM\Column(length: 255)]
     private ?string $imageUrl = null;
 
+    public function __construct()
+    {
+        $this->temperatureUnit = "Kelvin";
+    }
+
     public function getId(): ?int
     {
         return $this->id;
