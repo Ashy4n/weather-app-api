@@ -17,7 +17,7 @@ class WeatherProvider
 
     public function getWeather(float $lat,float $lng): Object
     {
-        $apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?lat={$lat}&lon={$lng}&appid={$this->weatherApiKey}";
+        $apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?lat={$lat}&lon={$lng}&units=metric&appid={$this->weatherApiKey}";
         $response = $this->client->request(
             'GET',
             $apiEndpoint

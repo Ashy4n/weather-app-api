@@ -42,7 +42,7 @@ class WeatherHistoryRepository extends ServiceEntityRepository
 
     public function findAllQuery() : QueryBuilder
     {
-        return $this->createQueryBuilder('w');
+        return $this->createQueryBuilder('w')->orderBy("w.createdAt" ,"DESC");
     }
 
     public function getMostQueriedCity() : String

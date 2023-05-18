@@ -23,7 +23,7 @@ class Weather
     private ?string $clouds = null;
 
     #[ORM\Column]
-    private ?int $wind = null;
+    private ?float $wind = null;
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
@@ -33,7 +33,7 @@ class Weather
 
     public function __construct()
     {
-        $this->temperatureUnit = "Kelvin";
+        $this->temperatureUnit = "C";
     }
 
     public function getId(): ?int
@@ -77,12 +77,12 @@ class Weather
         return $this;
     }
 
-    public function getWind(): ?int
+    public function getWind(): ?float
     {
         return $this->wind;
     }
 
-    public function setWind(int $wind): self
+    public function setWind(float $wind): self
     {
         $this->wind = $wind;
 

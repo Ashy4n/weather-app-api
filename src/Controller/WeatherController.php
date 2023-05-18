@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\HistoryInput;
 use App\Repository\WeatherHistoryRepository;
+use App\Service\Validator;
 use App\Service\WeatherService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,17 +16,17 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class WeatherController extends AbstractController
 {
-    public function __construct(private WeatherService $service)
+    public function __construct(private WeatherService $service, private Validator $validator)
     {
     }
 
     #[Route('/getWeather', name: "getWeather", methods: ['GET'])]
     public function getWeather(Request $request): Response
     {
-        $lat = $request->query->get('lat');
+        $lat = $request->query->get('lat') ;
         $lng = $request->query->get('lng');
-        if($lat < -90 || $lat > 90 || $lng < -180 || $lng >180)return $this->json(null,Response::HTTP_BAD_REQUEST);
-        if($lat == null || $lng == null) return $this->json(null,Response::HTTP_BAD_REQUEST);
+
+        if(!$this->validator->validateWeatherInput($lat,$lng))return $this->json(null,Response::HTTP_BAD_REQUEST);
 
         $response = $this->service->getWeatherByCoordinates($lat,$lng);
         return $this->json($response);
@@ -36,6 +37,9 @@ class WeatherController extends AbstractController
     {
         $page = $request->query->get('page');
         $limit = $request->query->get('limit');
+
+        if(!$this->validator->validateHistoryInput($page,$limit))return $this->json(null,Response::HTTP_BAD_REQUEST);
+
         $response = $this->service->getWeatherHistory($page,$limit);
         return $this->json($response);
     }
