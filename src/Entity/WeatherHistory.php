@@ -21,10 +21,10 @@ class WeatherHistory
     private ?string $country = null;
 
     #[ORM\Column]
-    private ?int $lat = null;
+    private ?float $lat = null;
 
     #[ORM\Column]
-    private ?int $lng = null;
+    private ?float $lng = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -67,24 +67,24 @@ class WeatherHistory
         return $this;
     }
 
-    public function getLat(): ?int
+    public function getLat(): ?float
     {
         return $this->lat;
     }
 
-    public function setLat(int $lat): self
+    public function setLat(float $lat): self
     {
         $this->lat = $lat;
 
         return $this;
     }
 
-    public function getLng(): ?int
+    public function getLng(): ?float
     {
         return $this->lng;
     }
 
-    public function setLng(int $lng): self
+    public function setLng(float $lng): self
     {
         $this->lng = $lng;
 

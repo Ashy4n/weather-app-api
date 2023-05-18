@@ -14,7 +14,7 @@ class Weather
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $temperatureValue = null;
+    private ?float $temperatureValue = null;
 
     #[ORM\Column(length: 255)]
     private ?string $temperatureUnit = null;
@@ -41,12 +41,12 @@ class Weather
         return $this->id;
     }
 
-    public function getTemperatureValue(): ?int
+    public function getTemperatureValue(): ?float
     {
         return $this->temperatureValue;
     }
 
-    public function setTemperatureValue(int $temperatureValue): self
+    public function setTemperatureValue(float $temperatureValue): self
     {
         $this->temperatureValue = $temperatureValue;
 

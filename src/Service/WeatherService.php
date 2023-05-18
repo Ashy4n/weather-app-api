@@ -25,22 +25,19 @@ class WeatherService
        return $this->saveWeather->save($data);
     }
 
-    public function getWeatherHistory(int $page,int $pageLimit){
+    public function getWeatherHistory(int $page,int $pageLimit) : Pagerfanta
+    {
       $queryBuilder =  $this->weatherHistoryRepository->findAllQuery();
       $adapter = new QueryAdapter($queryBuilder);
       return Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, $page, $pageLimit);
     }
 
-    public function getStatistics()
+    public function getStatistics() : array
     {
-       $city = $this->weatherHistoryRepository->getMostQueriedCity();
-       $queries = $this->weatherRepository->getNumberOfQueries();
-       $tempData = $this->weatherRepository->getTemperatureData();
-
        return $statistics = [
-           'mostQueriedCity' => $city,
-           'allQueries' => $queries,
-           'tempData' => $tempData
+           'mostQueriedCity' => $this->weatherHistoryRepository->getMostQueriedCity(),
+           'allQueries' => $this->weatherRepository->getNumberOfQueries(),
+           'tempData' => $this->weatherRepository->getTemperatureData()
        ];
     }
 

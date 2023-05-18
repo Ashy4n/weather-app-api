@@ -11,8 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
 class SaveWeather
 {
     public function __construct(
-        private WeatherRepository $weatherRepository ,
-        private WeatherHistoryRepository $weatherHistoryRepository,
         private EntityManagerInterface $entityManager
     )
     {
@@ -21,14 +19,17 @@ class SaveWeather
     public function save($data) : WeatherHistory
     {
         $weather = new Weather();
+
         $weather->setTemperatureValue($data->main->temp);
         $weather->setClouds($data->clouds->all);
         $weather->setDescription($data->weather[0]->description);
         $weather->setImageUrl($data->weather[0]->icon);
         $weather->setWind($data->wind->speed);
+
         $this->entityManager->persist($weather);
 
         $weatherHistory = new WeatherHistory();
+
         $weatherHistory->setLat($data->coord->lat);
         $weatherHistory->setLng($data->coord->lon);
         $weatherHistory->setCity($data->name);
@@ -36,6 +37,7 @@ class SaveWeather
             $weatherHistory->setCountry($data->sys->country);
         }else $weatherHistory->setCountry("");
         $weatherHistory->setWeather($weather);
+
         $this->entityManager->persist($weatherHistory);
 
         $this->entityManager->flush();
