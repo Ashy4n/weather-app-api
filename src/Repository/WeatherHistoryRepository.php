@@ -49,6 +49,8 @@ class WeatherHistoryRepository extends ServiceEntityRepository
     {
         $result = $this->createQueryBuilder('w')
             ->select('w.city' )
+            ->where('w.city != :emptyString')
+            ->setParameter('emptyString', '')
             ->groupBy('w.city')
             ->orderBy('COUNT(w.city)' , 'DESC')
             ->setMaxResults(1)

@@ -33,7 +33,7 @@ class SaveWeather
         $weatherHistory->setLat($data->coord->lat);
         $weatherHistory->setLng($data->coord->lon);
         $weatherHistory->setCity($data->name);
-        if(property_exists($data,"country")){
+        if(property_exists($data->sys,"country")){
             $weatherHistory->setCountry($data->sys->country);
         }else $weatherHistory->setCountry("");
         $weatherHistory->setWeather($weather);

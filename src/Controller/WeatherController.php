@@ -20,12 +20,6 @@ class WeatherController extends AbstractController
     {
     }
 
-//    #[Route('/', name: "WeatherAPP", methods: ['GET'])]
-//    public function index(Request $request): Response
-//    {
-//        return $this->render("./");
-//    }
-
     #[Route('/getWeather', name: "getWeather", methods: ['GET'])]
     public function getWeather(Request $request): Response
     {
