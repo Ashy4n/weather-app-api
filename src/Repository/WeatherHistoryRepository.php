@@ -45,7 +45,7 @@ class WeatherHistoryRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('w')->orderBy("w.createdAt" ,"DESC");
     }
 
-    public function getMostQueriedCity() : String
+    public function getMostQueriedCity() : String | null
     {
         $result = $this->createQueryBuilder('w')
             ->select('w.city' )
@@ -55,7 +55,12 @@ class WeatherHistoryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        return $result[0]['city'];
+
+        if($result !== []){
+            return $result[0]['city'];
+        }
+
+        return null;
     }
 
 }

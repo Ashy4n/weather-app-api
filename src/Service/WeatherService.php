@@ -11,33 +11,39 @@ use Pagerfanta\Pagerfanta;
 class WeatherService
 {
     public function __construct(
-        private WeatherProvider $weatherProvider ,
-        private SaveWeather $saveWeather,
+        private WeatherProvider          $weatherProvider,
+        private SaveWeather              $saveWeather,
         private WeatherHistoryRepository $weatherHistoryRepository,
-        private  WeatherRepository $weatherRepository
+        private WeatherRepository        $weatherRepository
     )
     {
     }
 
-    public function getWeatherByCoordinates(float $lat, float $lng) : WeatherHistory
+    public function getWeatherByCoordinates(float $lat, float $lng): WeatherHistory
     {
-       $data = $this->weatherProvider->getWeather($lat,$lng);
-       return $this->saveWeather->save($data);
+        $data = $this->weatherProvider->getWeather($lat, $lng);
+        return $this->saveWeather->save($data);
     }
 
-    public function getWeatherHistory(int $page,int $pageLimit) : Pagerfanta
+    public function getWeatherHistory(int $page, int $pageLimit): Pagerfanta
     {
-      $queryBuilder =  $this->weatherHistoryRepository->findAllQuery();
-      $adapter = new QueryAdapter($queryBuilder);
-      return Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, $page, $pageLimit);
+        $queryBuilder = $this->weatherHistoryRepository->findAllQuery();
+        $adapter = new QueryAdapter($queryBuilder);
+        return Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, $page, $pageLimit);
     }
 
-    public function getStatistics() : array
+    public function getStatistics(): array
     {
-       return $statistics = [
-           'mostQueriedCity' => $this->weatherHistoryRepository->getMostQueriedCity(),
-           'allQueries' => $this->weatherRepository->getNumberOfQueries(),
-           'tempData' => $this->weatherRepository->getTemperatureData()
+        $mostQueriedCity = $this->weatherHistoryRepository->getMostQueriedCity();
+        $allQueries = $this->weatherRepository->getNumberOfQueries();
+        $tempData = $this->weatherRepository->getTemperatureData();
+
+        if($allQueries === 0) return [];
+
+        return $statistics = [
+            'mostQueriedCity' => $mostQueriedCity,
+           'allQueries' => $allQueries,
+           'tempData' =>$tempData
        ];
     }
 

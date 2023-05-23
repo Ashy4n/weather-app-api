@@ -4,7 +4,7 @@ namespace App\Service;
 
 class Validator
 {
-    public function validateWeatherInput(string $lat,string $lng): bool
+    public function validateWeatherInput(?float $lat,?float $lng): bool
     {
         if(!is_numeric($lng) || !is_numeric($lat))return false;
         if($lat == null || $lng == null) return false;
@@ -13,7 +13,7 @@ class Validator
         return true;
     }
 
-    public function validateHistoryInput(string $page,string $limit): bool
+    public function validateHistoryInput(?float  $page,?float  $limit): bool
     {
         if(!is_numeric($page) || !is_numeric($limit) || $limit > 100)return false;
 
