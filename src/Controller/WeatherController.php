@@ -19,6 +19,14 @@ class WeatherController extends AbstractController
     public function __construct(private WeatherService $service, private Validator $validator)
     {
     }
+    #[Route('/connected', name: "connected", methods: ['GET'])]
+    public function connected() :Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->connect();
+        $connected = $em->getConnection()->isConnected();
+        dd($connected);
+    }
 
     #[Route('/getWeather', name: "getWeather", methods: ['GET'])]
     public function getWeather(Request $request): Response
