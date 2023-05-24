@@ -44,8 +44,9 @@ class WeatherRepository extends ServiceEntityRepository
         $result = $this->createQueryBuilder('w')
             ->select('COUNT(w) as allQ')
             ->getQuery()
-            ->getResult();
-        return $result[0]['allQ'];
+            ->getOneOrNullResult();
+
+        return $result['allQ'];
     }
 
     public function getTemperatureData(): array
@@ -57,9 +58,9 @@ class WeatherRepository extends ServiceEntityRepository
                 'MAX(w.temperatureValue) as MAX'
             )
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
 
-        return $result[0];
+        return $result;
     }
 
 }

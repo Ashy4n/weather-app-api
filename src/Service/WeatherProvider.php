@@ -31,7 +31,6 @@ class WeatherProvider
             'appid' => $this->weatherApiKey
         ];
 
-
         $apiParams = http_build_query($params, $arg_separator = "&",);
 
         $response = $this->client->request(

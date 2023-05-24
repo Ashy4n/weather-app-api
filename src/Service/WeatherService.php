@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\DTO\Statistics;
 use App\DTO\WeatherHistoryInput;
 use App\DTO\WeatherInfoInput;
 use App\Entity\WeatherHistory;
@@ -34,19 +35,13 @@ class WeatherService
         return Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, $input->page, $input->limit);
     }
 
-    public function getStatistics(): array
+    public function getStatistics() : Statistics
     {
-        $mostQueriedCity = $this->weatherHistoryRepository->getMostQueriedCity();
-        $allQueries = $this->weatherRepository->getNumberOfQueries();
-        $tempData = $this->weatherRepository->getTemperatureData();
-
-        if($allQueries === 0) return [];
-
-        return $statistics = [
-            'mostQueriedCity' => $mostQueriedCity,
-            'allQueries' => $allQueries,
-           'tempData' =>$tempData
-       ];
+       return $statistics = new Statistics(
+            $this->weatherHistoryRepository->getMostQueriedCity(),
+            $this->weatherRepository->getNumberOfQueries(),
+            $this->weatherRepository->getTemperatureData(),
+        );
     }
 
 }
