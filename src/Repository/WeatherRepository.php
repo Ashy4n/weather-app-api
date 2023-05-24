@@ -39,16 +39,16 @@ class WeatherRepository extends ServiceEntityRepository
         }
     }
 
-    public function getNumberOfQueries() : int
+    public function getNumberOfQueries(): int
     {
         $result = $this->createQueryBuilder('w')
-            ->select('COUNT(w) as allQ' )
+            ->select('COUNT(w) as allQ')
             ->getQuery()
             ->getResult();
         return $result[0]['allQ'];
     }
 
-    public function getTemperatureData() : Array
+    public function getTemperatureData(): array
     {
         $result = $this->createQueryBuilder('w')
             ->select(

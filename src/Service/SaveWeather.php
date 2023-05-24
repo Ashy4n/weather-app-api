@@ -17,7 +17,7 @@ class SaveWeather
     {
     }
 
-    public function save(WeatherApiResponse $data) : WeatherHistory
+    public function save(WeatherApiResponse $data): WeatherHistory
     {
         $weather = new Weather();
 
@@ -34,9 +34,9 @@ class SaveWeather
         $weatherHistory->setLat($data->coord->lat);
         $weatherHistory->setLng($data->coord->lon);
         $weatherHistory->setCity($data->name);
-        if($data->sys->country==="null"){
+        if ($data->sys->country === "null") {
             $weatherHistory->setCountry($data->sys->country);
-        }else $weatherHistory->setCountry("");
+        } else $weatherHistory->setCountry("");
         $weatherHistory->setWeather($weather);
 
         $this->entityManager->persist($weatherHistory);

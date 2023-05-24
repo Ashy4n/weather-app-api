@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Forms\WeatherHistoryForm;
-use App\Service\Validator;
 use App\Service\WeatherService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +27,8 @@ class HistoryControllet extends AbstractController
         }
 
         $input = $form->getData();
-
         $response = $this->service->getWeatherHistory($input);
+
         return $this->json($response);
     }
 }

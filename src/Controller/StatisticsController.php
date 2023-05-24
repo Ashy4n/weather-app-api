@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Service\Validator;
 use App\Service\WeatherService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

@@ -2,9 +2,11 @@
 
 namespace App\DTO;
 
-class Clouds {
+class Clouds
+{
     public function __construct(
         public readonly int $all,
-    ){
+    )
+    {
     }
 }

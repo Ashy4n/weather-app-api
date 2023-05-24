@@ -2,10 +2,12 @@
 
 namespace App\DTO;
 
-class Coord {
+class Coord
+{
     public function __construct(
         public readonly float $lon,
         public readonly float $lat,
-    ){
+    )
+    {
     }
 }

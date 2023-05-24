@@ -40,25 +40,25 @@ class WeatherHistoryRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllQuery() : QueryBuilder
+    public function findAllQuery(): QueryBuilder
     {
-        return $this->createQueryBuilder('w')->orderBy("w.createdAt" ,"DESC");
+        return $this->createQueryBuilder('w')->orderBy("w.createdAt", "DESC");
     }
 
-    public function getMostQueriedCity() : String | null
+    public function getMostQueriedCity(): string|null
     {
         $result = $this->createQueryBuilder('w')
-            ->select('w.city' )
+            ->select('w.city')
             ->where('w.city != :emptyString')
             ->setParameter('emptyString', '')
             ->groupBy('w.city')
-            ->orderBy('COUNT(w.city)' , 'DESC')
+            ->orderBy('COUNT(w.city)', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getResult();
 
 
-        if($result !== []){
+        if ($result !== []) {
             return $result[0]['city'];
         }
 

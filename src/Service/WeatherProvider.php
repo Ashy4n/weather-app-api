@@ -15,9 +15,9 @@ class WeatherProvider
         private SerializerInterface $serializer,
         private HttpClientInterface $client,
         #[Autowire('%env(WEATHER_API_KEY)%')]
-        private string $weatherApiKey,
+        private string              $weatherApiKey,
         #[Autowire('%env(WEATHER_API_URL)%')]
-        private string $weatherApiUrl,
+        private string              $weatherApiUrl,
     )
     {
     }
@@ -25,19 +25,19 @@ class WeatherProvider
     public function getWeather(WeatherInfoInput $input): WeatherApiResponse
     {
         $params = [
-            'lat' =>  $input->lat,
+            'lat' => $input->lat,
             'lon' => $input->lng,
             'units' => "metric",
             'appid' => $this->weatherApiKey
         ];
 
 
-       $apiParams = http_build_query($params, $arg_separator = "&",);
+        $apiParams = http_build_query($params, $arg_separator = "&",);
 
-       $response = $this->client->request(
-           'GET',
-           $this->weatherApiUrl.$apiParams
-       );
+        $response = $this->client->request(
+            'GET',
+            $this->weatherApiUrl . $apiParams
+        );
 
         $content = $response->getContent();
         $weatherResponse = $this->serializer->deserialize($content, WeatherApiResponse::class, 'json');

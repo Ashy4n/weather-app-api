@@ -3,9 +3,6 @@
 namespace App\Controller;
 
 use App\Forms\WeatherInfoForm;
-use App\HistoryInput;
-use App\Repository\WeatherHistoryRepository;
-use App\Service\Validator;
 use App\Service\WeatherService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

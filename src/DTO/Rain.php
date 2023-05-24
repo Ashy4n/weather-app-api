@@ -2,9 +2,11 @@
 
 namespace App\DTO;
 
-class Rain {
+class Rain
+{
     public function __construct(
         public readonly float $h,
-    ){
+    )
+    {
     }
 }

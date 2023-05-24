@@ -2,7 +2,8 @@
 
 namespace App\DTO;
 
-class Main {
+class Main
+{
     public function __construct(
         public readonly float $temp,
         public readonly float $feels_like,
@@ -12,6 +13,7 @@ class Main {
         public readonly float $humidity,
         public readonly float $sea_level,
         public readonly float $grnd_level,
-    ){
+    )
+    {
     }
 }
