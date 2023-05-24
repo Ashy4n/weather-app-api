@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\DTO\WeatherApiResponse;
 use App\Entity\Weather;
 use App\Entity\WeatherHistory;
 use App\Repository\WeatherHistoryRepository;
@@ -16,14 +17,14 @@ class SaveWeather
     {
     }
 
-    public function save($data) : WeatherHistory
+    public function save(WeatherApiResponse $data) : WeatherHistory
     {
         $weather = new Weather();
 
         $weather->setTemperatureValue($data->main->temp);
         $weather->setClouds($data->clouds->all);
-        $weather->setDescription($data->weather[0]->description);
-        $weather->setImageUrl($data->weather[0]->icon);
+        $weather->setDescription($data->weather->description);
+        $weather->setImageUrl($data->weather->icon);
         $weather->setWind($data->wind->speed);
 
         $this->entityManager->persist($weather);
@@ -33,7 +34,7 @@ class SaveWeather
         $weatherHistory->setLat($data->coord->lat);
         $weatherHistory->setLng($data->coord->lon);
         $weatherHistory->setCity($data->name);
-        if(property_exists($data->sys,"country")){
+        if($data->sys->country==="null"){
             $weatherHistory->setCountry($data->sys->country);
         }else $weatherHistory->setCountry("");
         $weatherHistory->setWeather($weather);

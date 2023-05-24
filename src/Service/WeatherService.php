@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\DTO\WeatherHistoryInput;
+use App\DTO\WeatherInfoInput;
 use App\Entity\WeatherHistory;
 use App\Repository\WeatherHistoryRepository;
 use App\Repository\WeatherRepository;
@@ -19,17 +21,17 @@ class WeatherService
     {
     }
 
-    public function getWeatherByCoordinates(float $lat, float $lng): WeatherHistory
+    public function getWeatherByCoordinates(WeatherInfoInput $input): WeatherHistory
     {
-        $data = $this->weatherProvider->getWeather($lat, $lng);
+        $data = $this->weatherProvider->getWeather($input);
         return $this->saveWeather->save($data);
     }
 
-    public function getWeatherHistory(int $page, int $pageLimit): Pagerfanta
+    public function getWeatherHistory(WeatherHistoryInput $input): Pagerfanta
     {
         $queryBuilder = $this->weatherHistoryRepository->findAllQuery();
         $adapter = new QueryAdapter($queryBuilder);
-        return Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, $page, $pageLimit);
+        return Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, $input->page, $input->limit);
     }
 
     public function getStatistics(): array
@@ -42,7 +44,7 @@ class WeatherService
 
         return $statistics = [
             'mostQueriedCity' => $mostQueriedCity,
-           'allQueries' => $allQueries,
+            'allQueries' => $allQueries,
            'tempData' =>$tempData
        ];
     }

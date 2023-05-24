@@ -2,29 +2,25 @@
 
 namespace App\Controller;
 
-use App\Forms\WeatherInfoForm;
-use App\HistoryInput;
-use App\Repository\WeatherHistoryRepository;
+use App\Forms\WeatherHistoryForm;
 use App\Service\Validator;
 use App\Service\WeatherService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-
-class WeatherController extends AbstractController
+class HistoryControllet extends AbstractController
 {
+
     public function __construct(private WeatherService $service)
     {
     }
 
-    #[Route('/get-weather', name: "getWeather", methods: ['GET'])]
-    public function getWeather(Request $request): Response
+    #[Route('/get-history', name: "getHistory", methods: ['GET'])]
+    public function getHistory(Request $request): Response
     {
-        $form = $this->createForm(WeatherInfoForm::class);
+        $form = $this->createForm(WeatherHistoryForm::class);
         $form->submit($request->query->all());
 
         if (!$form->isValid()) {
@@ -33,8 +29,7 @@ class WeatherController extends AbstractController
 
         $input = $form->getData();
 
-        $response = $this->service->getWeatherByCoordinates($input);
+        $response = $this->service->getWeatherHistory($input);
         return $this->json($response);
     }
-
 }
