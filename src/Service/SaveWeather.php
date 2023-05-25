@@ -5,8 +5,6 @@ namespace App\Service;
 use App\DTO\WeatherApiResponse;
 use App\Entity\Weather;
 use App\Entity\WeatherHistory;
-use App\Repository\WeatherHistoryRepository;
-use App\Repository\WeatherRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SaveWeather

@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\DTO\WeatherApiResponse;
 use App\DTO\WeatherInfoInput;
-use App\DTO\WeatherRes;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -39,8 +38,7 @@ class WeatherProvider
         );
 
         $content = $response->getContent();
-        $weatherResponse = $this->serializer->deserialize($content, WeatherApiResponse::class, 'json');
 
-        return $weatherResponse;
+        return $this->serializer->deserialize($content, WeatherApiResponse::class, 'json');
     }
 }
